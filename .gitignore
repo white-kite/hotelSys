@@ -1,0 +1,48 @@
+# Eclipse 설정 파일
+.project
+.classpath
+.settings/
+
+# 빌드 디렉토리
+/bin/
+/target/
+
+# 로컬 환경 설정 파일
+*.local
+*.swp
+
+# 로그 파일
+*.log
+
+# OS 별 파일
+.DS_Store
+Thumbs.db
+
+# IDE 별 파일
+.idea/
+*.iml
+
+# Maven 디렉토리
+.mvn/
+!**/src/main/**/target/
+
+# Gradle 디렉토리
+.gradle/
+build/
+
+# 빌드 출력물
+*.class
+*.war
+*.ear
+*.jar
+*.zip
+*.tar.gz
+
+# 기타
+*.tmp
+*.bak
+*.backup
+*.swp
+*~.nib
+*.orig
+*.sublime-workspace
