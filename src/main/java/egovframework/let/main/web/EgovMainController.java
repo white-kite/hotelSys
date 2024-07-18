@@ -35,7 +35,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
  */
 @Controller@SessionAttributes(types = ComDefaultVO.class)
 public class EgovMainController {
-
 	/**
 	 * EgovBBSManageService
 	 */
