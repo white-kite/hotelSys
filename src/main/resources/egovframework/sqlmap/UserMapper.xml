@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="egovframework.let.main.data.UserMapper">
+    <select id="selectAllUsers" resultType="egovframework.let.main.data.User">
+        SELECT id, user_id, pass, name, role, status, etc
+        FROM user
+    </select>
+</mapper>
