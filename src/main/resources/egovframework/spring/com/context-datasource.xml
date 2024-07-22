@@ -71,4 +71,27 @@
         <property name="password" value="${Globals.Password}"/>
     </bean>
     
+    <!-- SqlMapClient 설정 -->
+    <bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+        <property name="configLocations">
+            <list>
+                <value>classpath:/egovframework/sqlmap/config/${Globals.DbType}/*.xml</value>
+            </list>
+        </property>
+        <property name="dataSource" ref="egov.dataSource"/>
+        <property name="lobHandler" ref="egov.lobHandler"/>
+    </bean>
+    
+    <!-- MyBatis SqlSessionFactory 설정 -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource-mysql"/>
+        <!-- <property name="mapperLocations" value="classpath:/mappers/*.xml"/> -->
+        <property name="mapperLocations" value="classpath:/sqlmap/*.xml"/>        
+    </bean>
+
+    <!-- MyBatis SqlSessionTemplate 설정 -->
+    <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg index="0" ref="sqlSessionFactory"/>
+    </bean>
+    
 </beans>

@@ -2,19 +2,30 @@ package egovframework.let.main.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.annotation.Resource;
+
+import org.mybatis.spring.SqlSessionTemplate;
+//import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import egovframework.let.main.data.User;
 import egovframework.let.main.data.UserMapper;
 
-@Service
+@Service("userService")
 public class UserService {
-	@Autowired
-    private UserMapper userMapper;
 
-    public List<User> getAllUsers() {
-        return userMapper.selectAllUsers();
+	@Resource(name="sqlSessionTemplate")
+    private SqlSessionTemplate sqlSession;
+
+    public List<User> selectAllUsers() {
+        return sqlSession.getMapper(UserMapper.class).selectAllUsers();
     }
+	
+	//	@Autowired
+//    private UserMapper userMapper;
+//
+//    public List<User> getAllUsers() {
+//        return userMapper.selectAllUsers();
+//    }
 
 }

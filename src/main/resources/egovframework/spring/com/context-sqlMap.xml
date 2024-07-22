@@ -5,11 +5,10 @@
     <!-- lob Handler -->
     <bean id="lobHandler" class="org.springframework.jdbc.support.lob.DefaultLobHandler" lazy-init="true" />
 
-
 	<!-- MyBatis 설정 추가 -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource-${Globals.DbType}" />
-        <property name="mapperLocations" value="classpath*:egovframework/sqlmap/**/*.xml" />
+        <property name="mapperLocations" value="classpath*:egovframework/sqlmap/*.xml" />
         <property name="configLocation" value="classpath:egovframework/sqlmap/config/mybatis-config.xml" />
     </bean>
 
