@@ -19,7 +19,9 @@
         <typeAlias alias="User" type="egovframework.let.main.data.User" />
     </typeAliases>
 
+	<!-- 
     <mappers>
         <mapper resource="egovframework/sqlmap/UserMapper.xml" />
     </mappers>
+     -->
 </configuration>

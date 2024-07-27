@@ -15,6 +15,17 @@
     <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
         <constructor-arg index="0" ref="sqlSessionFactory" />
     </bean>
+    
+    <!-- SqlMapClient 설정 
+    <bean id="egov.sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+        <property name="configLocations">
+            <list>
+                <value>classpath:/egovframework/sqlmap/config/${Globals.DbType}/*.xml</value>
+            </list>
+        </property>
+        <property name="dataSource" ref="egov.dataSource"/>
+        <property name="lobHandler" ref="egov.lobHandler"/>
+    </bean>-->
 	
 	<!-- SqlMap setup for iBATIS Database Layer -->
 	<!-- <bean id="sqlMapClient" class="egovframework.rte.psl.orm.ibatis.SqlMapClientFactoryBean">

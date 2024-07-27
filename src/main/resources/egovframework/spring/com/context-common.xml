@@ -2,9 +2,11 @@
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns:context="http://www.springframework.org/schema/context"
 		xmlns:mvc="http://www.springframework.org/schema/mvc"
+		xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
 		xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
 				http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
-				http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+				http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+				http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd">
 
     <!-- component-scan 설정-->
 	<context:component-scan base-package="egovframework">
@@ -14,15 +16,19 @@
 		<!-- Controller 포함 exclude에서 include로 변경 -->
 	</context:component-scan>
 	
+	<!-- MyBatis 매퍼 스캔 설정 -->
+    <mybatis:scan base-package="egovframework.let.main.data"/>
+	
+	
 	<!-- MVC 설정 추가 -->
     <mvc:annotation-driven />
 	
-	<!-- 메시지소스빈 설정 -->
+	<!-- 메시지소스빈 설정
     <bean id="egovMessageSource" class="egovframework.com.cmm.EgovMessageSource">
         <property name="reloadableResourceBundleMessageSource">
             <ref bean="messageSource" />
         </property> 
-    </bean>
+    </bean>  -->
     <!-- 프로퍼티 파일 위치 설정 -->
 	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
         <property name="basenames">
