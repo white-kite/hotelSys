@@ -28,7 +28,9 @@ public class UserService {
     private UserMapper userMapper;
 
     public List<User> getAllUsers() {
-        return userMapper.selectAllUsers();
+    	List<User> users = userMapper.selectAllUsers();
+        System.out.println("Loaded Users: " + users); // 로그 추가
+        return users;
     }
 
 }

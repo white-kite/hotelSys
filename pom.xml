@@ -289,6 +289,23 @@
 		    <version>2.1.4</version>
 		</dependency>
 		
+		<!-- jackson : 자바 객체와 json 간의 변환을 도와주는 라이브러리 추가 -->
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-databind</artifactId>
+		    <version>2.13.0</version>
+		</dependency>
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-core</artifactId>
+		    <version>2.13.0</version>
+		</dependency>
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-annotations</artifactId>
+		    <version>2.13.0</version>
+		</dependency>
+		
 		
 	</dependencies>
 

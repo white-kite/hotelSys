@@ -38,7 +38,11 @@ public class MainController {
 	
 	@GetMapping("/userlist")
     public List<User> userList() {
-		return userService.getAllUsers();
+		List<User> users = userService.getAllUsers();
+		for (User user : users) {
+            System.out.println("Returning User: id=" + user.getId() + ", name=" + user.getName());
+        }
+        return users;
     }
 
 }
