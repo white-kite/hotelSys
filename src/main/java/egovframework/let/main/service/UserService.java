@@ -32,5 +32,14 @@ public class UserService {
         System.out.println("Loaded Users: " + users); // 로그 추가
         return users;
     }
+    
+    public boolean validateUser(String name, String pass) {
+    	User user = userMapper.selectUserById(name);
+    	if (user == null) { // id 없음
+    		return false;
+    	}
+    	
+    	return pass.equals(user.getPass()); // 비밀번호 일치 여부
+    }
 
 }

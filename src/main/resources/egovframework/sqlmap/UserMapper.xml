@@ -8,4 +8,10 @@
         SELECT id, user_id, pass, name, role, status, etc
         FROM user
     </select>
+    
+    <select id="selectUserById" resultType="egovframework.let.main.data.User" parameterType="String">
+        SELECT id, user_id, pass, name, role, status, etc
+        FROM user
+        WHERE name = #{name}
+    </select>
 </mapper>
