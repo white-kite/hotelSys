@@ -5,13 +5,46 @@
 
 <mapper namespace="egovframework.let.main.data.UserMapper">
     <select id="selectAllUsers" resultType="egovframework.let.main.data.User">
-        SELECT id, user_id, pass, name, role, status, etc
+        SELECT id, 
+        	   user_id, 
+        	   pass, 
+        	   name, 
+        	   role, 
+        	   status, 
+        	   etc
         FROM user
     </select>
     
-    <select id="selectUserById" resultType="egovframework.let.main.data.User" parameterType="String">
-        SELECT id, user_id, pass, name, role, status, etc
+    <select id="selectUserByLogin" resultType="egovframework.let.main.data.User" parameterType="map">
+        SELECT id,
+               user_id, 
+               pass,
+               name, 
+               role, 
+               status, 
+               etc
         FROM user
         WHERE name = #{name}
+          AND pass = #{pass}
     </select>
+    
+    <insert id="userCreate" parameterType="egovframework.let.main.data.User">
+        INSERT INTO user(
+        	 id,
+         	 user_id,
+        	 pass,
+        	 name, 
+        	 role, 
+        	 status, 
+        	 etc)
+        VALUES (
+        	#{id},
+        	#{user_id}, 
+        	#{pass}, 
+        	#{name}, 
+        	#{role}, 
+        	#{status}, 
+        	#{etc}
+        	)
+    </insert>
 </mapper>
