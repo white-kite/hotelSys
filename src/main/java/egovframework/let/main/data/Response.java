@@ -1,16 +1,17 @@
 package egovframework.let.main.data;
+import java.util.List;
 
 import lombok.Data;
 
 @Data
-public class LoginResponse {
+public class Response<T> {
 	private boolean success;
     private String message;
-    private User user;
-    
-    public LoginResponse(boolean success, String message, User user) {
+    private T data;
+
+    public Response(boolean success, String message, T data) {
         this.success = success;
         this.message = message;
-        this.user = user;
+        this.data = data;
     }
 }

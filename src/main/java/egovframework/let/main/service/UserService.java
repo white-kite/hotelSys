@@ -38,7 +38,7 @@ public class UserService {
         params.put("name", name);
         params.put("pass", encryptedPassword);
     	
-        User user = userMapper.selectUserByLogin(params);
+        User user = userMapper.selectUser(params);
         return user;
     }
     
@@ -51,7 +51,7 @@ public class UserService {
         
         User user = new User();
         user.setId(uuid);  // UUID를 id로 설정
-        user.setUser_id(userId);
+        user.setUserId(userId);
         user.setPass(encryptedPassword);
         user.setName(name);
         user.setEtc(etc);

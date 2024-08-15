@@ -10,7 +10,7 @@ import lombok.Data;
 public class User {
 	
 	private String id;
-	private String user_id;
+	private String userId;
 	private String pass;
 	private String name;
 	private String role = "user";
