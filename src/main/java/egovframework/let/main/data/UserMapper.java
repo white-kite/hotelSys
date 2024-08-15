@@ -12,5 +12,7 @@ public interface UserMapper {
 	User selectUser(User user);
 	
 	int userCreate(User user);
+	
+	int userDetailCreate(User user);
 
 }

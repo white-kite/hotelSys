@@ -59,7 +59,8 @@
         	 pass,
         	 name, 
         	 role, 
-        	 status)
+        	 status
+        	 )
         VALUES (
         	#{id},
         	#{userId}, 
@@ -67,6 +68,19 @@
         	#{name}, 
         	#{role}, 
         	#{status}
+        	)
+    </insert>
+    
+    <insert id="userDetailCreate" parameterType="egovframework.let.main.data.User">
+        INSERT INTO user_detail(
+        	 id,
+        	 phone_number,
+        	 etc
+        	 )
+        VALUES (
+        	#{id},
+        	#{phoneNumber}, 
+        	#{etc}
         	)
     </insert>
 </mapper>

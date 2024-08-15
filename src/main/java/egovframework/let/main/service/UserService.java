@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import egovframework.let.main.data.Response;
 import egovframework.let.main.data.User;
 import egovframework.let.main.data.UserMapper;
 import egovframework.let.utl.PasswordUtil;
@@ -39,7 +40,7 @@ public class UserService {
         return user;
     }
     
-    public User createUser(User user) {
+    public Response<User> createUser(User user) {
         // 비밀번호 해싱 (예: SHA-256)
         String encryptedPassword = PasswordUtil.hashPassword(user.getPass());
         
@@ -48,15 +49,27 @@ public class UserService {
         
         user.setId(uuid);  // UUID를 id로 설정
         user.setPass(encryptedPassword);
+        
+        
+        // 중복된 userId가 있는지 확인 (User 객체의 나머지 필드는 null로 설정)
+        User checkUser = new User();
+        checkUser.setUserId(user.getUserId());
+
+        User existingUser = userMapper.selectUser(checkUser);
+        if (existingUser != null) {
+            //throw new RuntimeException("Duplicate user ID");
+        	return new Response<>(false, "userId ust not be duplicated", null);
+        }
 
         // 사용자 저장
         int rowsInserted = userMapper.userCreate(user);
+        int rowsInserted2 = userMapper.userDetailCreate(user);
 
-        // 삽입이 성공했으면 user 객체 반환
-        if (rowsInserted > 0) {
-            return user;
+        // 저장 성공 시 user 객체 반환
+        if (rowsInserted > 0 && rowsInserted2 > 0) {
+        	return new Response<>(true, "User created successfully", user);
         } else {
-            throw new RuntimeException("User could not be created");
+            return new Response<>(false, "User could not be created", null);
         }
     }
 

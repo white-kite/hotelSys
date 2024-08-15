@@ -100,8 +100,8 @@ public class MainController {
 	@PostMapping("/usercreate")
     public Response<User> userCreate(@RequestBody User user) {
   	
-        user = userService.createUser(user);
-        return new Response<>(true, "User created successfully", user);
+        return userService.createUser(user);
+        //return new Response<>(true, "User created successfully", user);
     }
 	
 
