@@ -1,10 +1,6 @@
 package egovframework.let.main.service;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 //import javax.annotation.Resource;
@@ -16,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import egovframework.let.main.data.User;
 import egovframework.let.main.data.UserMapper;
+import egovframework.let.utl.PasswordUtil;
 
 @Service("userService")
 public class UserService {
@@ -29,32 +26,26 @@ public class UserService {
         return users;
     }
     
-    public User userLogin(String name, String rawPassword) {
+    public User userLogin(User user) {
     	// 입력된 비밀번호를 해싱
-        String encryptedPassword = hashPassword(rawPassword);
+        String encryptedPassword = PasswordUtil.hashPassword(user.getPass());
 
         // 해싱된 비밀번호를 사용하여 사용자 조회
-        Map<String, Object> params = new HashMap<>();
-        params.put("name", name);
-        params.put("pass", encryptedPassword);
+        user.setPass(encryptedPassword);
     	
-        User user = userMapper.selectUser(params);
+        user = userMapper.selectUser(user);
         return user;
     }
     
-    public User createUser(String userId, String rawPassword, String name, String etc) {
+    public User createUser(User user) {
         // 비밀번호 해싱 (예: SHA-256)
-        String encryptedPassword = hashPassword(rawPassword);
+        String encryptedPassword = PasswordUtil.hashPassword(user.getPass());
         
         // UUID 생성
         String uuid = UUID.randomUUID().toString();
         
-        User user = new User();
         user.setId(uuid);  // UUID를 id로 설정
-        user.setUserId(userId);
         user.setPass(encryptedPassword);
-        user.setName(name);
-        user.setEtc(etc);
 
         // 사용자 저장
         int rowsInserted = userMapper.userCreate(user);
@@ -64,20 +55,6 @@ public class UserService {
             return user;
         } else {
             throw new RuntimeException("User could not be created");
-        }
-    }
-
-    private String hashPassword(String password) {
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
-            byte[] hashedBytes = md.digest(password.getBytes());
-            StringBuilder sb = new StringBuilder();
-            for (byte b : hashedBytes) {
-                sb.append(String.format("%02x", b));
-            }
-            return sb.toString();
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException("Error hashing password", e);
         }
     }
 

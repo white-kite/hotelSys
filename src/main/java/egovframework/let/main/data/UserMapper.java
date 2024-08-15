@@ -9,7 +9,7 @@ public interface UserMapper {
 	
 	public List<User> selectAllUsers();
 	
-	User selectUser(Map<String, Object> params);
+	User selectUser(User user);
 	
 	int userCreate(User user);
 

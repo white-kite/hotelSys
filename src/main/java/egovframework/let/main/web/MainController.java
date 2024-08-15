@@ -26,29 +26,6 @@ public class MainController {
 		return result;
 	}
 	
-	@PostMapping("/login")
-	public Response<User> login(@RequestParam("name") String name, @RequestParam("pass") String rawPassword) {
-
-	    // 받은 id와 pass를 콘솔에 출력
-	    System.out.println("Received Name: " + name);
-	    System.out.println("Received Password: " + rawPassword);
-	    
-	    name = name.trim();
-	    rawPassword = rawPassword.trim();
-	    
-	    if (name.isEmpty() || rawPassword.isEmpty()) {
-	        return new Response<>(false, "Name and password must not be null", null);
-	    }
-	    
-	    User user = userService.userLogin(name, rawPassword);
-	    
-	    if (user == null) {
-	        return new Response<>(false, "Login failed. Invalid name or password.", null);
-	    }
-
-	    return new Response<>(true, "Login success", user);
-	}
-	
 	@GetMapping("/userlist")
     public Response<List<User>> userList() {
 		List<User> users = userService.getAllUsers();
@@ -58,14 +35,52 @@ public class MainController {
 		return new Response<>(true, "User list retrieved successfully", users);
     }
 	
+	@PostMapping("/login")
+	public Response<User> login(@RequestParam("userId") String userId, @RequestParam("pass") String rawPassword) {
+
+	    // 받은 id와 pass를 콘솔에 출력
+	    System.out.println("Received user_id: " + userId);
+	    System.out.println("Received Password: " + rawPassword);
+	    
+	    userId = userId.trim();
+	    rawPassword = rawPassword.trim();
+	    
+	    if (userId.isEmpty() || rawPassword.isEmpty()) {
+	        return new Response<>(false, "userId and password must not be null", null);
+	    }
+	    
+	    // User 객체 생성
+	    User loginUser = new User();
+	    loginUser.setUserId(userId);
+	    loginUser.setPass(rawPassword);
+	    
+	    User user = userService.userLogin(loginUser);
+	    
+	    if (user == null) {
+	        return new Response<>(false, "Login failed. Invalid name or password.", null);
+	    }
+
+	    return new Response<>(true, "Login success", user);
+	    
+	}
+	
+	
+	
 	@PostMapping("/usercreate")
     public Response<User> userCreate(@RequestParam("user_id") String userId,
                            @RequestParam("pass") String rawPassword,
                            @RequestParam("name") String name,
                            @RequestParam("etc") String etc) {
         
-        User user = userService.createUser(userId, rawPassword, name, etc);
+		User user = new User();
+		user.setUserId(userId);
+		user.setPass(rawPassword);
+		user.setName(name);
+		user.setEtc(etc);
+		
+        user = userService.createUser(user);
         return new Response<>(true, "User created successfully", user);
     }
+	
 
 }

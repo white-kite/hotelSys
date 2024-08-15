@@ -26,7 +26,7 @@
         FROM user
     </select>
     
-    <select id="selectUser" resultMap="userResultMap" parameterType="map">
+    <select id="selectUser" resultMap="userResultMap" parameterType="egovframework.let.main.data.User">
         SELECT id,
                user_id, 
                pass,
