@@ -15,5 +15,8 @@ public class User {
 	private String name;
 	private String role = "user";
     private String status = "active";
+    
+    // user_detail 테이블
     private String etc;
+    private String phoneNumber;
 }
