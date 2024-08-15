@@ -2,9 +2,12 @@ package egovframework.let.main.web;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +19,8 @@ import egovframework.let.main.service.UserService;
 @RestController
 @RequestMapping("/api")
 public class MainController {
+	
+	private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 	
 	@Autowired
 	private UserService userService;
@@ -30,17 +35,24 @@ public class MainController {
     public Response<List<User>> userList() {
 		List<User> users = userService.getAllUsers();
 		for (User user : users) {
-            System.out.println("Returning User: id=" + user.getId() + ", name=" + user.getName());
+			logger.info("Returning User: id=" + user.getId() + ", name=" + user.getName());
         }
 		return new Response<>(true, "User list retrieved successfully", users);
     }
 	
+	@PostMapping("/profile")
+	public Response<User> profile(@RequestBody User user){
+		
+		user = userService.selectUser(user);
+		
+		return new Response<>(true, "User selected", user);
+	}
+	
 	@PostMapping("/login")
 	public Response<User> login(@RequestParam("userId") String userId, @RequestParam("pass") String rawPassword) {
 
-	    // 받은 id와 pass를 콘솔에 출력
-	    System.out.println("Received user_id: " + userId);
-	    System.out.println("Received Password: " + rawPassword);
+		// 기존 System.out.println 대신 Logger 사용
+	    logger.info("Received user_id: {}", userId);
 	    
 	    userId = userId.trim();
 	    rawPassword = rawPassword.trim();
@@ -54,7 +66,7 @@ public class MainController {
 	    loginUser.setUserId(userId);
 	    loginUser.setPass(rawPassword);
 	    
-	    User user = userService.userLogin(loginUser);
+	    User user = userService.selectUser(loginUser);
 	    
 	    if (user == null) {
 	        return new Response<>(false, "Login failed. Invalid name or password.", null);
@@ -65,7 +77,8 @@ public class MainController {
 	}
 	
 	
-	
+	/*
+	// 테스트 시 application/x-www-form-urlencoded 방식 사용 필요
 	@PostMapping("/usercreate")
     public Response<User> userCreate(@RequestParam("user_id") String userId,
                            @RequestParam("pass") String rawPassword,
@@ -78,6 +91,15 @@ public class MainController {
 		user.setName(name);
 		user.setEtc(etc);
 		
+        user = userService.createUser(user);
+        return new Response<>(true, "User created successfully", user);
+    }
+	*/
+	
+	// 테스트 시 json 방식 사용 필요
+	@PostMapping("/usercreate")
+    public Response<User> userCreate(@RequestBody User user) {
+  	
         user = userService.createUser(user);
         return new Response<>(true, "User created successfully", user);
     }
