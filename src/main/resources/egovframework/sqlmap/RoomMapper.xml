@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="egovframework.let.main.data.RoomMapper">
+
+
+    <select id="selectRoom" parameterType="egovframework.let.main.data.Room" resultType="egovframework.let.main.data.Room">
+        SELECT id, 
+        	   name, 
+        	   etc
+        FROM room
+        WHERE 1=1
+       	  <if test="id !=null">
+       	  AND id = #{id}
+       	  </if>
+       	  <if test="name !=null">
+       	  AND name LIKE CONCAT('%', #{name}, '%')
+       	  </if>
+       	  <if test="etc != null">
+       	  AND etc LIKE CONCAT('%', #{etc}, '%')
+       	  </if>
+    </select>
+
+    <insert id="createRoom" parameterType="egovframework.let.main.data.Room">
+        INSERT INTO room (
+        	id, 
+        	name, 
+        	etc)
+        VALUES (
+        	#{id},
+        	#{name}, 
+        	#{etc}
+        	)
+    </insert>
+
+    <delete id="deleteRoom" parameterType="egovframework.let.main.data.Room">
+        DELETE 
+        FROM room
+        WHERE id = #{id}
+    </delete>
+
+    <update id="updateRoom" parameterType="egovframework.let.main.data.Room">
+        UPDATE room
+        SET name = #{name},
+            etc = #{etc}
+        WHERE id = #{id}
+    </update>
+</mapper>
